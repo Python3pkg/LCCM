@@ -545,44 +545,44 @@ def displayOutput(outputFile, startTime, llEstimation,llNull, nClasses,
     timeElapsed = (timeElapsed.days * 24.0 * 60.0) + (timeElapsed.seconds/60.0)
     
     print ("\n")
-    print ("Number of Parameters:".ljust(45,' ')), (str(num_parameters_total).rjust(10,' '))  
-    print ("Number of Observations:".ljust(45, ' ')),(str(np.unique(obsID).shape[0]).rjust(10,' '))   
-    print ("Null Log-Likelihood:".ljust(45, ' ')),(str(round(llNull,2)).rjust(10,' '))   
-    print ("Fitted Log-Likelihood:".ljust(45, ' ')),(str(round(llEstimation,2)).rjust(10,' '))   
-    print ("Rho-Squared:".ljust(45, ' ')),(str(round(rho_squared,2)).rjust(10,' ')) 
-    print ("Rho-Bar-Squared:".ljust(45, ' ')),(str(round(rho_bar_squared,2)).rjust(10,' ')) 
-    print ("AIC:".ljust(45, ' ')),(str(round(AIC,2)).rjust(10,' ')) 
-    print ("BIC:".ljust(45, ' ')),(str(round(BIC)).rjust(10,' ')) 
-    print ("Estimation time (minutes):".ljust(45, ' ')),(str(round(timeElapsed,2)).rjust(10,' ')) 
+    print(("Number of Parameters:".ljust(45,' ')), (str(num_parameters_total).rjust(10,' ')))  
+    print(("Number of Observations:".ljust(45, ' ')),(str(np.unique(obsID).shape[0]).rjust(10,' ')))   
+    print(("Null Log-Likelihood:".ljust(45, ' ')),(str(round(llNull,2)).rjust(10,' ')))   
+    print(("Fitted Log-Likelihood:".ljust(45, ' ')),(str(round(llEstimation,2)).rjust(10,' ')))   
+    print(("Rho-Squared:".ljust(45, ' ')),(str(round(rho_squared,2)).rjust(10,' '))) 
+    print(("Rho-Bar-Squared:".ljust(45, ' ')),(str(round(rho_bar_squared,2)).rjust(10,' '))) 
+    print(("AIC:".ljust(45, ' ')),(str(round(AIC,2)).rjust(10,' '))) 
+    print(("BIC:".ljust(45, ' ')),(str(round(BIC)).rjust(10,' '))) 
+    print(("Estimation time (minutes):".ljust(45, ' ')),(str(round(timeElapsed,2)).rjust(10,' '))) 
     print ("\n")
     
     # Display screen
 
     for s in range(0, nClasses):
-        print
-        print 'Class %d Model: ' %(s + 1)
-        print '-----------------------------------------------------------------------------------------'
-        print 'Variables                                     parameters    std_err     t_stat    p_value'
-        print '-----------------------------------------------------------------------------------------'
+        print()
+        print('Class %d Model: ' %(s + 1))
+        print('-----------------------------------------------------------------------------------------')
+        print('Variables                                     parameters    std_err     t_stat    p_value')
+        print('-----------------------------------------------------------------------------------------')
         for k in range(0, len(namesExpVarsClassSpec[s])):
-            print '%-45s %10.4f %10.4f %10.4f %10.4f' %(namesExpVarsClassSpec[s][k], paramClassSpec[s][k], 
-                    stdErrClassSpec[s][k], paramClassSpec[s][k]/stdErrClassSpec[s][k], scipy.stats.norm.sf(abs(paramClassSpec[s][k]/stdErrClassSpec[s][k]))*2 )
-        print '-----------------------------------------------------------------------------------------'
+            print('%-45s %10.4f %10.4f %10.4f %10.4f' %(namesExpVarsClassSpec[s][k], paramClassSpec[s][k], 
+                    stdErrClassSpec[s][k], paramClassSpec[s][k]/stdErrClassSpec[s][k], scipy.stats.norm.sf(abs(paramClassSpec[s][k]/stdErrClassSpec[s][k]))*2 ))
+        print('-----------------------------------------------------------------------------------------')
 
         
-    print
-    print 'Class Membership Model:'
-    print '-----------------------------------------------------------------------------------------'
-    print 'Variables                                     parameters    std_err     t_stat    p_value'
-    print '-----------------------------------------------------------------------------------------'
+    print()
+    print('Class Membership Model:')
+    print('-----------------------------------------------------------------------------------------')
+    print('Variables                                     parameters    std_err     t_stat    p_value')
+    print('-----------------------------------------------------------------------------------------')
     cParam = 0
     for k in range(0, len(namesExpVarsClassMem)):
         for s in range(1, nClasses):
             varName = namesExpVarsClassMem[k] + ' (Class %d)' %(s + 1)
-            print '%-45s %10.4f %10.4f %10.4f %10.4f' %(varName, paramClassMem[cParam], 
-                    stdErrClassMem[cParam], paramClassMem[cParam]/stdErrClassMem[cParam], scipy.stats.norm.sf(abs(paramClassMem[cParam]/stdErrClassMem[cParam]))*2)
+            print('%-45s %10.4f %10.4f %10.4f %10.4f' %(varName, paramClassMem[cParam], 
+                    stdErrClassMem[cParam], paramClassMem[cParam]/stdErrClassMem[cParam], scipy.stats.norm.sf(abs(paramClassMem[cParam]/stdErrClassMem[cParam]))*2))
             cParam += 1
-    print '-----------------------------------------------------------------------------------------'
+    print('-----------------------------------------------------------------------------------------')
 
     
 
@@ -928,7 +928,7 @@ def emAlgo(outputFilePath, outputFileName, outputFile, nClasses,
     """ 
     
     startTime = datetime.now()
-    print 'Processing data'
+    print('Processing data')
     outputFile.write('Processing data\n')
 
     inds = np.unique(indID)
@@ -941,7 +941,7 @@ def emAlgo(outputFilePath, outputFileName, outputFile, nClasses,
             obsID, altID,
             choice, availAlts) 
 
-    print 'Initializing EM Algorithm...\n'
+    print('Initializing EM Algorithm...\n')
     outputFile.write('Initializing EM Algorithm...\n\n')
     converged, iterCounter, llOld = False, 0, 0
     while not converged:
@@ -953,7 +953,7 @@ def emAlgo(outputFilePath, outputFileName, outputFile, nClasses,
                 paramClassSpec, expVarsClassSpec, altAv, altChosen, obsAv,indWeights)
         
         currentTime = datetime.now().strftime('%a, %d %b %Y %H:%M:%S')
-        print '<%s> Iteration %d: %.4f' %(currentTime, iterCounter, llNew)
+        print('<%s> Iteration %d: %.4f' %(currentTime, iterCounter, llNew))
         outputFile.write('<%s> Iteration %d: %.4f\n' %(currentTime, iterCounter, llNew))
 
         # M-Step: Use the weights derived in the E-Step to update the model parameters.
@@ -990,7 +990,7 @@ def emAlgo(outputFilePath, outputFileName, outputFile, nClasses,
     weightsNull, llNull = calProb(nClasses, nInds, paramClassMemNull, expVarsClassMem, indClassAv,
                 paramClassSpecNull, expVarsClassSpec, altAv, altChosen, obsAv,indWeights)    
     
-    print '\nEnumerating choices for the sample'
+    print('\nEnumerating choices for the sample')
     outputFile.write('\nEnumerating choices for the sample\n')
     
     (nInds, expVarsClassMem, indClassAv,
@@ -1183,7 +1183,7 @@ def lccm_fit(data,
     namesExpVarsClassSpec = []
     for i in range(0, len(class_specific_labels)):
         name_iterator=[]
-        for key, value in class_specific_labels[i].iteritems() :
+        for key, value in class_specific_labels[i].items() :
             if type(value) is list:
                 name_iterator += value
             else:
